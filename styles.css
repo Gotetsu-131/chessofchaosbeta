@@ -1,0 +1,331 @@
+:root {
+    --bg-main: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --success: #22c55e;
+    --secondary: #64748b;
+    --danger: #ef4444;
+    --light-sq: #f0d9b5;
+    --dark-sq: #b58863;
+    --selected-sq: rgba(100, 240, 100, 0.6);
+    --possible-move: rgba(235, 200, 50, 0.7);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#app {
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+}
+
+.screen.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 480px;
+}
+
+.card.wide {
+    max-width: 700px;
+}
+
+.title {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #60a5fa;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 25px;
+}
+
+/* HƯỚNG DẪN MENU STYLES */
+.instructions-card {
+    margin: 20px 0;
+    text-align: left;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.instructions-card h2 {
+    font-size: 1.2rem;
+    color: #38bdf8;
+    margin-bottom: 14px;
+}
+
+.instruction-item {
+    margin-bottom: 12px;
+}
+
+.instruction-item:last-child {
+    margin-bottom: 0;
+}
+
+.instruction-title {
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-bottom: 4px;
+}
+
+.instruction-content {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+.instruction-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-top: 4px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+}
+
+.btn-primary { background-color: var(--primary); }
+.btn-primary:hover { background-color: var(--primary-hover); }
+.btn-secondary { background-color: var(--secondary); }
+.btn-success { background-color: var(--success); }
+.btn-danger { background-color: var(--danger); }
+
+.btn-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.variants-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.variant-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.variant-card:hover {
+    border-color: var(--primary);
+}
+
+.variant-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.variant-info p {
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.setup-group {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.setup-group h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #cbd5e1;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+.radio-group label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* GAME BOARD STYLES */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 15px 25px;
+}
+
+.highlight {
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+.game-body {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+#chess-board {
+    width: 520px;
+    height: 520px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    border: 4px solid #334155;
+    border-radius: 4px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.8rem;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.square.light { background-color: var(--light-sq); }
+.square.dark { background-color: var(--dark-sq); }
+.square.selected { background-color: var(--selected-sq) !important; }
+
+.square.possible-move::after {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background-color: var(--possible-move);
+    border-radius: 50%;
+    position: absolute;
+}
+
+.piece {
+    line-height: 1;
+    z-index: 1;
+}
+
+.piece.white { color: #ffffff; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.8)); }
+.piece.black { color: #111111; filter: drop-shadow(0 2px 2px rgba(255,255,255,0.4)); }
+
+/* BẢNG LỊCH SỬ NƯỚC ĐI */
+.history-container {
+    width: 220px;
+    height: 528px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.history-container h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 5px;
+}
+
+.history-log {
+    flex: 1;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+}
+
+/* MODAL STYLES */
+.modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal.hidden { display: none; }
+
+.reward-notice {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.reward-notice.eligible {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+    border: 1px solid #22c55e;
+}
+
+.reward-notice.not-eligible {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid #ef4444;
+}
+
+@media (max-width: 768px) {
+    #chess-board { width: 360px; height: 360px; }
+    .square { font-size: 2rem; }
+    .variants-grid { grid-template-columns: 1fr; }
+    .game-body { flex-direction: column; align-items: center; }
+    .history-container { width: 100%; max-width: 360px; height: 150px; }
+}

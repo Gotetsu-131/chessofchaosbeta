@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cờ Vua Biến Thể</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 1. MÀN HÌNH CHÍNH (LOBBY) -->
+        <section id="screen-lobby" class="screen active">
+            <div class="card glass wide">
+                <h1 class="title">CHESS OF CHAOS</h1>
+                <p class="subtitle">Version: Beta</p>
+                
+                <!-- HƯỚNG DẪN MENU -->
+                <div class="instructions-card">
+                    <h2>📖 Hướng Dẫn Trò Chơi</h2>
+                    
+                    <div class="instruction-item">
+                        <div class="instruction-title">Cách chơi các biến thể:</div>
+                        <div class="instruction-content">Lên mạng kiếm</div>
+                    </div>
+
+                    <div class="instruction-item">
+                        <div class="instruction-title">Cách nhận thưởng:</div>
+                        <div class="instruction-content">
+                            <ul>
+                                <li><strong>Truyền thống, Chess960, King of the Hill, Atomic Chess:</strong> Nếu <strong>THẮNG</strong> và tổng điểm các quân ăn được từ <strong>25 trở lên</strong>, đạt yêu cầu.</li>
+                                <li><strong>Anti Chess:</strong> Nếu <strong>THẮNG</strong> và tổng điểm các quân ăn được từ <strong>20 trở xuống</strong>, đạt yêu cầu.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="instruction-item">
+                        <div class="instruction-title">Điểm các quân:</div>
+                        <div class="instruction-content">
+                            <ul>
+                                <li>Tốt: <strong>1đ</strong></li>
+                                <li>Mã, Tượng: <strong>3đ</strong></li>
+                                <li>Xe: <strong>5đ</strong></li>
+                                <li>Hậu: <strong>10đ</strong></li>
+                                <li>Vua (Anti Chess): <strong>3đ</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-to-variants" class="btn btn-primary">Chơi Ngay</button>
+            </div>
+        </section>
+
+        <!-- 2. MÀN HÌNH CHỌN BIẾN THỂ -->
+        <section id="screen-variants" class="screen">
+            <div class="card glass wide">
+                <h2>Chọn Biến Thể</h2>
+                <div class="variants-grid">
+                    <label class="variant-card">
+                        <input type="checkbox" value="chess960" class="variant-toggle">
+                        <div class="variant-info">
+                            <h3>Chess960</h3>
+                            <p>Vị trí hàng quân chính được xếp ngẫu nhiên.</p>
+                        </div>
+                    </label>
+                    <label class="variant-card">
+                        <input type="checkbox" value="antiChess" class="variant-toggle">
+                        <div class="variant-info">
+                            <h3>Anti Chess (Lose Chess)</h3>
+                            <p>Bắt buộc ăn quân nếu có thể. Bên hết quân trước sẽ thắng.</p>
+                        </div>
+                    </label>
+                    <label class="variant-card">
+                        <input type="checkbox" value="atomic" class="variant-toggle">
+                        <div class="variant-info">
+                            <h3>Atomic Chess</h3>
+                            <p>Khi ăn quân sẽ tạo ra vụ nổ xung quanh ô đó.</p>
+                        </div>
+                    </label>
+                    <label class="variant-card">
+                        <input type="checkbox" value="kingOfTheHill" class="variant-toggle">
+                        <div class="variant-info">
+                            <h3>King of the Hill</h3>
+                            <p>Đưa Vua vào 1 trong 4 ô trung tâm (d4, d5, e4, e5) để thắng.</p>
+                        </div>
+                    </label>
+                </div>
+                <div class="btn-group">
+                    <button id="btn-to-lobby" class="btn btn-secondary">Quay Lại</button>
+                    <button id="btn-to-setup" class="btn btn-primary">Tiếp Theo</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. MÀN HÌNH CẤU HÌNH TRẬN ĐẤU -->
+        <section id="screen-setup" class="screen">
+            <div class="card glass">
+                <h2>Cấu Hình Trận Đấu</h2>
+                
+                <div class="setup-group">
+                    <h3>Độ Khó Bot (Stockfish Engine)</h3>
+                    <div class="radio-group">
+                        <label><input type="radio" name="difficulty" value="easy"> Dễ (Thấp nhất - Ngẫu nhiên)</label>
+                        <label><input type="radio" name="difficulty" value="medium" checked> Thường (Depth 5)</label>
+                        <label><input type="radio" name="difficulty" value="hard"> Khó (Depth 12)</label>
+                    </div>
+                </div>
+
+                <div class="setup-group">
+                    <h3>Chọn Quân</h3>
+                    <div class="radio-group">
+                        <label><input type="radio" name="side" value="w" checked> Trắng</label>
+                        <label><input type="radio" name="side" value="b"> Đen</label>
+                        <label><input type="radio" name="side" value="random"> Ngẫu Nhiên</label>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button id="btn-to-variants-back" class="btn btn-secondary">Quay Lại</button>
+                    <button id="btn-start-game" class="btn btn-success">Bắt Đầu Chơi</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. MÀN HÌNH BÀN CỜ (GAME) -->
+        <section id="screen-game" class="screen">
+            <div class="game-container">
+                <div class="game-header card glass">
+                    <div class="status-box">Lượt đi: <span id="turn-indicator" class="highlight">Trắng</span></div>
+                    <div class="status-box">Biến thể: <span id="active-variants-text">Tiêu chuẩn</span></div>
+                    <div class="status-box">Điểm ăn quân: <span id="player-score-text" class="highlight">0đ</span></div>
+                    <button id="btn-quit" class="btn btn-danger">Thoát / Tùy chỉnh</button>
+                </div>
+
+                <div class="game-body">
+                    <div id="board-container">
+                        <div id="chess-board"></div>
+                    </div>
+                    
+                    <!-- BẢNG LỊCH SỬ NƯỚC ĐI -->
+                    <div class="history-container card glass">
+                        <h3>Lịch Sử Nước Đi</h3>
+                        <div id="move-history-log" class="history-log"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODAL KẾT THÚC TRẬN ĐẤU -->
+        <div id="game-over-modal" class="modal hidden">
+            <div class="modal-content card glass">
+                <h2 id="modal-title">Kết Thúc!</h2>
+                <div id="modal-message"></div>
+                <div class="btn-group">
+                    <button id="btn-restart" class="btn btn-primary">Chơi Lại</button>
+                    <button id="btn-modal-lobby" class="btn btn-secondary">Màn Hình Chính</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
