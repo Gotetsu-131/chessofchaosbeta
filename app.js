@@ -662,23 +662,40 @@ function endGame(result, reason) {
     const isAnti = state.selectedVariants.includes('antiChess');
     const playerScore = state.capturedPoints[state.playerColor] || 0;
 
-    // Kiểm tra điều kiện nhận thưởng (Đã chỉnh sửa điểm tối thiểu thành 25)
+    // Kiểm tra các cấp độ thưởng theo điều kiện
+    let rewardText = "Chúc may mắn lần sau";
     let isEligible = false;
+
     if (result === 'win') {
         if (isAnti) {
-            isEligible = playerScore <= 20;
+            if (playerScore <= 20) {
+                rewardText = "Thưởng Lớn";
+                isEligible = true;
+            } else if (playerScore <= 27) {
+                rewardText = "Thưởng nhỏ";
+                isEligible = true;
+            }
         } else {
-            isEligible = playerScore >= 25;
+            if (playerScore >= 25) {
+                rewardText = "Thưởng Lớn";
+                isEligible = true;
+            } else if (playerScore >= 15) {
+                rewardText = "Thưởng nhỏ";
+                isEligible = true;
+            }
+        }
+
+        // ĐIỀU KIỆN MỚI: Ở độ khó Dễ (easy), mọi phần thưởng đạt được đều chuyển thành Thưởng nhỏ
+        if (state.difficulty === 'easy' && isEligible) {
+            rewardText = "Thưởng nhỏ";
         }
     }
-
-    const rewardNotice = isEligible ? "Đủ điều kiện nhận thưởng" : "Chúc may mắn lần sau";
 
     if (result === 'win') {
         titleEl.innerText = "Chúc mừng bạn đã chiến thắng!";
         titleEl.style.color = "#4ade80";
     } else if (result === 'lose') {
-        titleEl.innerText = "Chúc máy may mắn lần sau!";
+        titleEl.innerText = "Chúc bạn may mắn lần sau!";
         titleEl.style.color = "#f87171";
     } else {
         titleEl.innerText = "Ván đấu Hòa!";
@@ -687,7 +704,7 @@ function endGame(result, reason) {
 
     msgEl.innerHTML = `${reason ? reason + '<br><br>' : ''}` +
         `Điểm ăn quân: <strong>${playerScore}đ</strong><br>` +
-        `<div class="reward-notice ${isEligible ? 'eligible' : 'not-eligible'}">${rewardNotice}</div>`;
+        `<div class="reward-notice ${isEligible ? 'eligible' : 'not-eligible'}">${rewardText}</div>`;
 
     modal.classList.remove('hidden');
 }
